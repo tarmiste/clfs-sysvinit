@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+]>
+
+<sect1 id="ch-temp-system-gettext" role="wrap">
+  <?dbhtml filename="gettext.html"?>
+
+  <title>Gettext-&gettext-version;</title>
+
+  <indexterm zone="ch-temp-system-gettext">
+    <primary sortas="a-Gettext">Gettext</primary>
+    <secondary>temporary system</secondary>
+  </indexterm>
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+  href="../../final-system/common/gettext.xml"
+  xpointer="xpointer(//*[@role='package'])"/>
+
+  <sect2 role="installation">
+    <title>Installation of Gettext</title>
+
+    <para os="a">Many packages' installation procedures use the
+    <command>msgfmt</command> program for i18n support, so we will compile
+    and install it into <filename class="directory">/tools</filename>.
+    Attr also needs <command>msgmerge</command> and <command>xgettext</command>,
+    so we will install those as well.</para>
+
+    <para os="b">Only the programs in the
+    <filename class="directory">gettext-tools</filename> directory need to be
+    installed for the temp-system:</para>
+
+<screen os="c"><userinput>cd gettext-tools</userinput></screen>
+
+    <para os="d">Prepare Gettext for compilation:</para>
+
+<screen os="e"><userinput>EMACS="no" \
+./configure \
+    --prefix=/tools \
+    --build=${CLFS_HOST} \
+    --host=${CLFS_TARGET} \
+    --disable-shared</userinput></screen>
+
+<variablelist os="f">
+      <title>The meaning of the configure option:</title>
+
+      <varlistentry>
+        <term><parameter>EMACS="no"</parameter></term>
+        <listitem>
+          <para>This prevents the installation of the Emacs Lisp files
+          as the test is known to hang on some hosts.</para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+    <para os="g">Compile the required programs and support library:</para>
+
+<screen os="h"><userinput>make -C gnulib-lib
+make -C intl pluralx.c
+make -C src msgfmt msgmerge xgettext</userinput></screen>
+
+    <para os="i">Install the <command>msgfmt</command> binary:</para>
+
+<screen os="j"><userinput>cp -v src/{msgfmt,msgmerge,xgettext} /tools/bin</userinput></screen>
+
+  </sect2>
+
+  <sect2 role="content">
+    <title/>
+
+    <para>Details on this package are located in <xref
+    linkend="contents-gettext" role="."/></para>
+
+  </sect2>
+
+</sect1>

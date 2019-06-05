@@ -1,2 +1,2 @@
 # clfs-sysvinit
-clfs sysvinit with updates
+clfs sysvinit WIP area
